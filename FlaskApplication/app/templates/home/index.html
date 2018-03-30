@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Timesheet</title>
+
+    <!-- Bootstrap core CSS -->
+
+    <link href="{{url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{url_for('static', filename='css/simple-sidebar.css')}}" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Menu
+                    </a>
+                </li>
+                <li>
+                    <a href="#">Dashboard</a>
+                </li>
+                <li>
+                    <a href="#">Page 2</a>
+                </li>
+                <li>
+                    <a href="#">Page 3</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <h1>Manage Engines</h1>
+                <div class="row">
+                    <div class="offset-md-6 col-md-3 pull-right">
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+                            <span class="icon-plus icon-white"> Add Engine</span>
+                        </button>
+
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+                            <span class="icon-plus icon-white"> Remove Engine</span>
+                        </button>
+                    </div>
+                </div> <hr/>
+                {% for engine_id, engine_title, engine_thrust in engines %}
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <span>{{engine_id}}</span>
+                        </div>
+                        <div class="col-sm-3">
+                            <span>{{engine_title}}</span>
+                        </div>
+                        <div class="col-sm-3">
+                            <span>{{engine_thrust}}</span>
+                        </div>
+                        <div class="col-sm-3">
+                            <span class="btn btn-link btn-sm" data-toggle="collapse" href="#collapseExample_{{engine_id}}" role="button" aria-expanded="false" aria-controls="collapseExample_{{engine_id}}">Edit</span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="collapse" id="collapseExample_{{engine_id}}">
+                          <div class="card card-body">
+
+                          <form action="{{ url_for('home.index') }}" method="POST">
+                            <div class="form-row">
+                              <div class="col-md-2 mb-3">
+                                <label for="validationDefault01">Engine ID</label>
+                                <input type="text" name="engineId" class="form-control" id="validationDefault01 disabledInput" placeholder="{{engine_id}}" value="{{engine_id}}" readonly="readonly">
+                              </div>
+                              <div class="col-md-8 mb-3">
+                                <label for="validationDefault02">Description</label>
+                                <input type="text" name="engineTitle" class="form-control" id="validationDefault02" placeholder="{{engine_title}}" value="{{engine_title}}" required>
+                              </div>
+                              <div class="col-md-2 mb-3">
+                                <label for="validationDefault02">Thrust</label>
+                                <input type="text" name="engineThrust" class="form-control" id="validationDefault02" placeholder="{{engine_thrust}}" value="{{engine_thrust}}" required>
+                              </div>
+                            </div>
+                            <button class="btn btn-primary" type="submit">Submit</button>
+                          </form>
+
+                          </div>
+                        </div>
+
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+<!--         <div class="col-lg-6 pull-right">
+            <a href="#menu-toggle" class="btn btn-success pull-right" id="menu-toggle">Manage Engines</a>
+        </div> -->
+        <div class="">
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add a new Engine</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="{{ url_for('home.index') }}" method="POST">
+                      <div class="form-group">
+                        <label for="engineID" class="col-form-label">EngineID:</label>
+                        <input type="text" class="form-control" name="engineID" id="engineID">
+                      </div>
+                      <div class="form-group">
+                        <label for="engineDescription" class="col-form-label">Description:</label>
+                        <input class="form-control" name="engineTitle" id="engineDescription"></input>
+                      </div>
+                      <div class="form-group">
+                        <label for="engineThrust" class="col-form-label">Thrust:</label>
+                        <input class="form-control" name="engineThrust" id="engineThrust"></input>
+                      </div>
+                      <button class="btn btn-primary" type="submit">Add Engine</button>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap core JavaScript -->
+
+    <script src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+
+</body>
+
+</html>
